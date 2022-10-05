@@ -14,9 +14,9 @@ Discussion points:
     * One in CircuitPython, which may be easier but more limited
 * Determine broad project scope
     * Start with web dashboard, Raspberry Pi, and single wireless sensor; add additional sensors if possible
-    * Not considering at the moment: space concerns (i.e., batter pack size, etc.)
+    * Not considering at the moment: space concerns (i.e., battery pack size, etc.)
 
-Goals for next week (include responsibilities)
+Goals for next week (include responsibilities):
 
 * Build project site (responsibility: GA)
 * Work through sensor tutorials (responsibility: GA)
