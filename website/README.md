@@ -1,1 +1,1 @@
-Placeholder for website
+### For website files, see [`gh-pages`](https://github.com/gdalphenaar/GVSU-CIS641-SamaSquad/tree/gh-pages) branch
