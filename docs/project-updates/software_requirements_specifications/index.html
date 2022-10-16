@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Theme Made By www.w3schools.com - No Copyright -->
+  <title>srs</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/GVSU-CIS641-SamaSquad/static/style.css">
+  <link rel="icon" type="image" href="/GVSU-CIS641-SamaSquad/static/favicon.ico">
+</head>
+<body>
+
+<header>
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <div class="navbar-brand">SAMASQUAD</div>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/GVSU-CIS641-SamaSquad/">HOME</a></li>
+        <li><a href="/GVSU-CIS641-SamaSquad/project-info/">INFO</a></li>
+        <li><a href="/GVSU-CIS641-SamaSquad/project-updates/">UPDATES</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+
+  <div class="container-fluid bg-3">
+    <div class="text-center">software requirements specifications</div>
+    <br>
+    <h1>Overview</h1>
+<p>This document outlines the system requirements specification, consisting of functional and non-functional requirements, for Project Sama - our guitar temperature and humidity monitoring system.</p>
+<p>This system consists of three major components:
+- the <em>remote sensor(s)</em> that measure local temperature and humidity;
+- the <em>base unit</em> that controls the remote sensor(s), analyzes and stores sensor data, and serves the web interface; and
+- the <em>web interface</em> that allows users to monitor environmental conditions</p>
+<p>Functional and non-functional requirements will be listed for each major component.</p>
+<h1>Functional Requirements</h1>
+<ol>
+<li>
+<p><strong>Remote Sensor(s)</strong></p>
+<ol>
+<li>Sensor(s) shall be capable of taking and recording temperature readings.</li>
+<li>Sensor(s) shall be capable of taking and recording humidity readings.</li>
+<li>Sensor(s) shall transmit readings back to the base unit in a usable data form.</li>
+<li>Sensor(s) shall be capable of remote management by the base unit.</li>
+</ol>
+</li>
+<li>
+<p><strong>Base Unit</strong></p>
+<ol>
+<li>The base unit shall manage sensor(s) wirelessly.</li>
+<li>The base unit shall host a database to store sensor logs.</li>
+<li>The base unit shall host the server for the web interface.</li>
+<li>The base unit shall posess data analysis capabilities.</li>
+<li>The base unit shall be capable of continuous operation without external user intervention.</li>
+</ol>
+</li>
+<li>
+<p><strong>Web Interface</strong></p>
+<ol>
+<li>Users shall be able to access the web interface from a web browser on their local network.</li>
+<li>The web interface shall use data stored in the base unit's database (see <strong>functional requirement 2.2</strong>).</li>
+<li>Users shall be able to set  upper and lower bounds (in degrees Fahrenheit or Celsius) for acceptable temperatures ranges.</li>
+<li>Users shall be able to set upper and lower bounds (in percent relative humidity) for acceptable humidity ranges.</li>
+<li>The web interface shall send a notification if either temperature or humidity drift out of the established acceptable range (see <strong>functional requirements 3.3 and 3.4</strong>).</li>
+<li>Users shall be able to specify a "binning" period for averaged readings.</li>
+<li>The web interface shall display the most recent averaged temperature reading.</li>
+<li>The web interface shall display the most recent averaged humidity reading.</li>
+<li>Users shall be able to specify a time period for trends.</li>
+<li>The web interface shall display temperature trends.</li>
+<li>The web interface shall display humidity trends.</li>
+</ol>
+</li>
+</ol>
+<h1>Non-Functional Requirements</h1>
+<ol>
+<li>
+<p><strong>Remote Sensor(s)</strong></p>
+<ol>
+<li>Sensor(s) should accurately and reliably record and transmit temperature and humidity readings.</li>
+<li>Sensor(s) should operate in a power-efficient manner, and be capable of running off of rechargeable batteries.</li>
+<li>Sensor(s) should be able to be mounted to a guitar stand or stored in a guitar case.</li>
+</ol>
+</li>
+<li>
+<p><strong>Base Unit</strong></p>
+<ol>
+<li>The system should take averaged temperature and humidity readings over a time period specified by the users to reduce fluctuation (see <strong>functional requirement 3.6</strong>).</li>
+<li>All systems (i.e., dashboard server, control program, and analysis/logging routines) should be able to run on at minimum a Raspberry Pi 3 Model B.</li>
+<li>All systems (i.e., dashboard server, control program, and analysis/logging routines) should be able to run concurrently with minimal slowdown perceived by the user.</li>
+<li>The base unit should be able to restart all services after a reboot without significant user intervention (see <strong>functional requirement 2.5</strong>).</li>
+<li>Users should be able to install all necessary files to install and run this service through a simple command line script.</li>
+</ol>
+</li>
+<li>
+<p><strong>Web Interface</strong></p>
+<ol>
+<li>The web interface should be responsive and usable on a phone screen and/or other touch screen devices (while connected to the user's local network).</li>
+<li>Users should be able to access temperature and humidity logs, and either display them graphically or access them as data files.</li>
+<li>Users should be able to set up password-authenticated access to the web interface.</li>
+</ol>
+</li>
+</ol>
+<p><img alt="amp dragons" src="/GVSU-CIS641-SamaSquad/static/images/amp-dragons.png" /></p>
+  </div>
+
+
+<footer class="container-fluid bg-4 text-center">
+  <p>samasquad - gvsu - cis 641 - fall 2022</a></p>
+</footer>
+
+</body>
+</html>

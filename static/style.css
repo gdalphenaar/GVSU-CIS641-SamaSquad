@@ -1,0 +1,91 @@
+:root {
+  --color-body : #f5f6f7;
+  --color_bg1  : #5F9EA0;
+  --color-bg2  : #474e5d;
+  --color-bg3  : #ffffff;
+  --color-bg4  : #2f2f2f;
+  --link-hover : mediumturquoise;
+}
+
+body {
+  font: 20px Montserrat, sans-serif;
+  line-height: 1.8;
+  color: var(--color-body);
+  overflow: scroll;
+}
+
+p {
+  font-size: 16px;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 25%;
+  max-width: 60%;
+  border: 3px solid var(--color-bg4);
+  border-radius: 5px;
+}
+
+.link-light {
+  color: var(--color-bg3);
+  text-decoration: underline;
+}
+
+.link-light:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+.link-dark {
+  color: var(--color-bg4);
+  text-decoration: underline;
+}
+
+.link-dark:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+.margin {
+  margin-bottom: 45px;
+}
+
+.bg-1 {
+  background-color: var(--color_bg1);
+  color: #ffffff;
+}
+
+.bg-2 {
+  background-color: var(--color-bg2);
+  color: #ffffff;
+}
+
+.bg-3 {
+  background-color: var(--color-bg3);
+  color: #555555;
+}
+
+.bg-4 {
+  background-color: var(--color-bg4);
+  color: #fff;
+}
+
+.container-fluid {
+  padding: 3%;
+}
+
+.navbar {
+  padding-top: 2%;
+  padding-bottom: 2%;
+  border: 0;
+  border-radius: 0;
+  margin-bottom: 0;
+  font-size: 12px;
+  letter-spacing: 5px;
+}
+
+.navbar-nav li a:hover {
+  color: var(--color_bg1) !important;
+}

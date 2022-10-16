@@ -1,0 +1,21 @@
+{% extends 'components/base.html' %}
+{% block content %}
+
+<div class="container-fluid bg-3">
+  <div class="text-center">check back here for some updates and/or small demos as the project progresses...</div>
+  <br>
+  <ul>
+    {% for page in pages %}
+      <li>
+        <a class="link-dark" href="{{  url_for("page", path=page.path) }}">{{  page.title }}</a>
+      </li>
+    {%  endfor %}
+  </ul>
+</div>
+
+<div class="container-fluid bg-3 text-center">
+  <img src="{{ url_for('static', filename='images/guitar-closeup.png') }}">
+  <br>
+  side note: while the finish on my guitar here is a bit checked (likely due to temperature and humidity swings!) this is considered somewhat of a desirable "vintage" look
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'components/base.html' %}
+{% block content %}
+<div class="container-fluid bg-1 text-center">
+  first, we have the <a class="link-light" href="https://github.com/gdalphenaar/GVSU-CIS641-SamaSquad/blob/master/docs/proposal.md"><em>project proposal</em></a>. this document outlines in a bit more detail the original impetus for the project, as well as some of the anticipated technologies needed for full implementation and some of the potential roadblocks.
+</div>
+
+<div class="container-fluid bg-2 text-center">
+  next up we have the <a class="link-light" href="https://github.com/gdalphenaar/GVSU-CIS641-SamaSquad/blob/master/docs/software_requirements_specifications.md"><em>software requirements specifications</em></a> document. this document outlines some of the features and functionality that the system <em>must</em> meet in order to be considered complete. while these are essentially complete, they are also subject to change from time to time.
+</div>
+
+<div class="container-fluid bg-3 text-center">
+  more info to come as project implementation progresses
+</div>
+
+<div class="container-fluid bg-1 text-center">
+  <img src="{{ url_for('static', filename='images/guitars-on-stand.png') }}">
+</div>
+{% endblock %}

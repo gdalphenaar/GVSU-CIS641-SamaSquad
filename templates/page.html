@@ -1,0 +1,8 @@
+{% extends 'components/base.html' %}
+{% block content %}
+  <div class="container-fluid bg-3">
+    <div class="text-center">{{  page.title }}</div>
+    <br>
+    {{  page.html|safe }}
+  </div>
+{% endblock %}
