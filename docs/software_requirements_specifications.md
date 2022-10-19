@@ -12,17 +12,17 @@ Functional and non-functional requirements will be listed for each major compone
 # Functional Requirements
 
 1. **Remote Sensor(s)**
-    1. Sensor(s) shall be capable of taking and recording temperature readings
-    1. Sensor(s) shall be capable of taking and recording humidity readings
+    1. Sensor(s) shall be capable of taking and recording temperature readings.
+    1. Sensor(s) shall be capable of taking and recording humidity readings.
     1. Sensor(s) shall transmit readings back to the base unit in a usable data form.
     1. Sensor(s) shall be capable of remote management by the base unit.
 
 1. **Base Unit**
     1. The base unit shall manage sensor(s) wirelessly.
-    1. The base unit shall host a database to store sensor logs
+    1. The base unit shall host a database to store sensor logs.
     1. The base unit shall host the server for the web interface.
-    1. The base unit shall posess data analysis capabilities
-    1. The base unit shall be capable of continuous operation without external user intervention
+    1. The base unit shall posess data analysis capabilities.
+    1. The base unit shall be capable of continuous operation without external user intervention.
 
 1. **Web Interface**
     1. Users shall be able to access the web interface from a web browser on their local network.
