@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <!-- Theme Made By www.w3schools.com - No Copyright -->
-  <title>Updates</title>
+  <title>pub/sub update</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -38,36 +38,33 @@
 </header>
 
 
-
-<div class="container-fluid bg-3">
-  <div class="text-center">check back here for some updates and/or small demos as the project progresses...</div>
-  <br>
-  <ul>
-    
-      <li>
-        <a class="link-dark" href="/GVSU-CIS641-SamaSquad/project-updates/update_1/">pub/sub update</a>
-      </li>
-    
-      <li>
-        <a class="link-dark" href="/GVSU-CIS641-SamaSquad/project-updates/getting-started/">getting started and gathering the essentials</a>
-      </li>
-    
-      <li>
-        <a class="link-dark" href="/GVSU-CIS641-SamaSquad/project-updates/software_requirements_specifications/">software requirements specifications</a>
-      </li>
-    
-      <li>
-        <a class="link-dark" href="/GVSU-CIS641-SamaSquad/project-updates/proposal/">initial project proposal</a>
-      </li>
-    
-  </ul>
-</div>
-
-<div class="container-fluid bg-3 text-center">
-  <img src="/GVSU-CIS641-SamaSquad/static/images/guitar-closeup.png">
-  <br>
-  side note: while the finish on my guitar here is a bit checked (likely due to temperature and humidity swings!) this is considered somewhat of a desirable "vintage" look
-</div>
+  <div class="container-fluid bg-3">
+    <div class="text-center">pub/sub update</div>
+    <br>
+    <p>in the first substantive update here, I...</p>
+<ul>
+<li>
+<p>set up a basic debian virtual machine for testing</p>
+</li>
+<li>
+<p>connected the bme280 to my wireless network using the esp8266 wireless board</p>
+</li>
+<li>
+<p>got the bme280 publishing on a topic</p>
+</li>
+<li>
+<p>installed mosquitto mqtt on the virtual machine</p>
+</li>
+<li>
+<p>installed Node-RED and set up an incredibly rudimentary dashboard</p>
+</li>
+</ul>
+<p>below, I have some prototype dashboard views. note that these are absolutely nowhere near final, and the final dashboard won't be built using Node-RED - this is just for quick-and-dirty testing purposes. part of the choice of Node-RED is that it's highly compatible with raspberry pi units (and makes dashboard creation super easy with its drag-and-drop interface), making some testing on the actual hardware (coming soon tm) a bit easier.</p>
+<p>here we can see the Node-RED dashboard in a desktop browser:</p>
+<p><img alt="dashboard-desktop" src="/GVSU-CIS641-SamaSquad/static/images/test-dashboard.png" /></p>
+<p>and here - just to verify that the final dashboard will be viewable on any (most) device on the local network, here it is in a phone browser:</p>
+<p><img alt="dashboard-mobile" src="/GVSU-CIS641-SamaSquad/static/images/dashboard-mobile.png" /></p>
+  </div>
 
 
 <footer class="container-fluid bg-4 text-center">
