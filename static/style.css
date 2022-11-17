@@ -28,6 +28,11 @@ img {
   border-radius: 5px;
 }
 
+
+header {
+  height: 4em;
+}
+
 .link-light {
   color: var(--color-bg3);
   text-decoration: underline;

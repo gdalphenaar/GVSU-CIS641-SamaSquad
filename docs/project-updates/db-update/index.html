@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <!-- Theme Made By www.w3schools.com - No Copyright -->
-  <title>Updates</title>
+  <title>mongodb update</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -38,40 +38,25 @@
 </header>
 
 
-
-<div class="container-fluid bg-3">
-  <div class="text-center">check back here for some updates and/or small demos as the project progresses...</div>
-  <br>
-  <ul>
-    
-      <li>
-        <a class="link-dark" href="/GVSU-CIS641-SamaSquad/project-updates/db-update/">mongodb update</a>
-      </li>
-    
-      <li>
-        <a class="link-dark" href="/GVSU-CIS641-SamaSquad/project-updates/update_1/">pub/sub update</a>
-      </li>
-    
-      <li>
-        <a class="link-dark" href="/GVSU-CIS641-SamaSquad/project-updates/getting-started/">getting started and gathering the essentials</a>
-      </li>
-    
-      <li>
-        <a class="link-dark" href="/GVSU-CIS641-SamaSquad/project-updates/software_requirements_specifications/">software requirements specifications</a>
-      </li>
-    
-      <li>
-        <a class="link-dark" href="/GVSU-CIS641-SamaSquad/project-updates/proposal/">initial project proposal</a>
-      </li>
-    
-  </ul>
-</div>
-
-<div class="container-fluid bg-3 text-center">
-  <img src="/GVSU-CIS641-SamaSquad/static/images/guitar-closeup.png">
-  <br>
-  side note: while the finish on my guitar here is a bit checked (likely due to temperature and humidity swings!) this is considered somewhat of a desirable "vintage" look
-</div>
+  <div class="container-fluid bg-3">
+    <div class="text-center">mongodb update</div>
+    <br>
+    <p>after tinkering around with things a bit more, I decided to publish the data from the bme280 sensor as a single json file rather than as separate temperature and humidity readings.</p>
+<p>this is somewhat advantageous for two main reasons:</p>
+<ul>
+<li>
+<p>it lets me publish on only one topic, rather than needing two topics (temperature and humidity) per sensor - I haven't gotten around to it quite yet, but this should make adding additional sensors a bit easier</p>
+</li>
+<li>
+<p>it keeps the data in json format for easy insertion into a mongodb database, where it can be done in one insert, rather than requiring either two rows in sqlite or multiple pre-operations to get the query ready</p>
+</li>
+</ul>
+<p>I was initially considering using a lightweight sqlite database for data storage here, but I think mongodb might be a slightly better option, and upon further consideration, the "fast and loose" nature of mongodb might work better with streamed data like from a sensor, as the schemaless design is resilient to data missingness or corruption.</p>
+<p>here we can see the streamed messages from the bme280 via the esp8266 as they are received:</p>
+<p><img alt="dashboard-desktop" src="/GVSU-CIS641-SamaSquad/static/images/published-json.png" /></p>
+<p>and here we can see the records in mongodb:</p>
+<p><img alt="dashboard-mobile" src="/GVSU-CIS641-SamaSquad/static/images/in-mongodb.png" /></p>
+  </div>
 
 
 <footer class="container-fluid bg-4 text-center">
