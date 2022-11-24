@@ -4,7 +4,7 @@ Team name: Sama Squad
 
 Members present: Grant Alphenaar (GA)
 
-Date: Sunday, Nov. 7, 2022
+Date: Sunday, Nov. 13, 2022
 
 Time: 7PM
 
