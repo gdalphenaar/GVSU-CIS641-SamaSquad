@@ -1,31 +1,82 @@
+import time, random, json, argparse
 import paho.mqtt.client as mqtt
-import time
-import random
 
 
-# set topic names here
-# prefaced with `sim` for clarity / testing
-topic_temperature = 'sim/temperature'
-topic_humidity    = 'sim/humidity'
+# get user arguments
+parser = argparse.ArgumentParser(
+    description='Simulate MQTT pub/sub IoT sensor traffic'
+)
+parser.add_argument(
+    'topic',
+    type=str,
+    help='topic to publish on'
+)
+parser.add_argument(
+    'friendly',
+    type=str,
+    help='friendly name for sensor'
+)
+parser.add_argument(
+    '--period',
+    type=int,
+    default=30,
+    help='publishing period in seconds'
+)
+parser.add_argument(
+    '--start_temp',
+    type=float,
+    default=20.0,
+    help='starting temperature value'
+)
+parser.add_argument(
+    '--start_humd',
+    type=float,
+    default=45.0,
+    help='starting humidity value'
+)
+parser.add_argument(
+    '--mqtt_host',
+    type=str,
+    default='localhost',
+    help='MQTT host addresss'
+)
+parser.add_argument(
+    '--mqtt_port',
+    type=int,
+    default=1883,
+    help='MQTT port'
+)
+args = parser.parse_args()
 
 
-# address of raspberry pi or VM
-mosquitto_addr = "192.168.1.77"
-port =1883
-
-
-# simulate pub/sub messages from sensor - 5 readings followed by a 30-second wait
-print('simulation running')
+# simulate pub/sub messages from sensor
 while True:
+
+    # make mqtt connection
     client = mqtt.Client()
-    client.connect(mosquitto_addr, port)
-    # for t in range(5):
-    rand_f = random.uniform( -(time.time()%10), time.time()%10 )
-    temp = str(round(22 + rand_f, 2))
-    humd = str(round(45 + rand_f, 2))
-    client.publish(topic_temperature, payload=temp, qos=1)
-    client.publish(topic_humidity, payload=humd, qos=1)
-    print(temp)
-    print(humd)
-    time.sleep(1)
-    # time.sleep(10)
+    client.connect(args.mqtt_host, args.mqtt_port)
+
+    # add some randomness to readings
+    rand_t = random.uniform( -(time.time()%10)/10, time.time()%10/10 )
+    rand_h = random.uniform( -(time.time()%10)/10, time.time()%10/10 )
+
+    # '''take''' readings
+    temp = round(args.start_temp + rand_t, 2)
+    humd = round(args.start_humd + rand_h, 2)
+
+    # compose message
+    message = json.dumps({
+        "sensor":args.topic,
+        "name":args.friendly,
+        "temp":temp,
+        "humd":humd
+    })
+
+    # publish message on specified topic
+    client.publish(args.topic, payload=message, qos=1)
+
+    # print message for debugging
+    print(message)
+
+    # wait for specified time period
+    time.sleep(args.period)
