@@ -28,7 +28,8 @@ bootstrap = Bootstrap(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    sensors = ['sensor/sensor77', 'sensor/sensor01']
+    return render_template('index.html',sensors=sensors)
 
 
 @socketio.on('subscribe')
@@ -41,6 +42,12 @@ def handle_subscribe(json_str):
 def handle_unsubscribe_all():
     mqtt.unsubscribe_all()
 
+
+@mqtt.on_connect()
+def handle_connect(client, userdata, flags, rc):
+    sensors = ['sensor/sensor77', 'sensor/sensor01']
+    for sensor in sensors:
+        mqtt.subscribe(sensor)
 
 @mqtt.on_message()
 def handle_mqtt_message(client, userdata, message):

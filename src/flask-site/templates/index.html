@@ -34,20 +34,30 @@
     });
 
     // get a new message
-    socket.on('mqtt_message', function(data) {
-      var message = JSON.parse(data['payload'])
-      document.getElementById(message.sensor).innerHTML =
-        'Temperature: <br/>' + message.temp +
-        '<br/><br/>' +
-        'Humidity: <br/>' + message.humd;
-      document.getElementById('title').innerHTML = message.name;
-    })
+    {% for sensor in sensors %}
+      socket.on('mqtt_message', function(data) {
+        var message = JSON.parse(data['payload'])
+        document.getElementById(message.sensor).innerHTML =
+          'Temperature: <br/>' + message.temp.toFixed(2) +
+          '<br/>' +
+          'Humidity: <br/>' + message.humd.toFixed(2);
+        document.getElementById( {{ sensor }} ).innerHTML = message.name;
+      })
+    {% endfor %}
   });
 </script>
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
+
+<ul>
+  {% for sensor in sensors %}
+  <li>{{ sensor }}</li>
+  <p id="{{ sensor }}"></p>
+  {% endfor %}
+</ul>
+
+<!-- <div class="container-fluid">
   <div class="row">
     <div class="col-xs-6">
       <div class="panel panel-default">
@@ -73,8 +83,7 @@
                 <div class="form-group">
                   <div class="col-xs-8">
                     <h1>
-                      <!-- <p id="subscribe_messages"></p> -->
-                      <p id="sensor/sensor77"></p>
+                      <p id="subscribe_messages"></p>
                     </h1>
                   </div>
                 </div>
@@ -85,5 +94,5 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 {% endblock %}
