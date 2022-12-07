@@ -32,23 +32,28 @@ def index():
     return render_template('index.html',sensors=sensors)
 
 
+# handle new topic/sensor subscription
 @socketio.on('subscribe')
 def handle_subscribe(json_str):
     data = json.loads(json_str)
     mqtt.subscribe(data['topic'], data['qos'])
 
 
+# reset and unsubscribe to all
 @socketio.on('unsubscribe_all')
 def handle_unsubscribe_all():
     mqtt.unsubscribe_all()
 
 
+# if server is shut down or mqtt connection lost, resubscribe on mwtt (re)connect
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
     sensors = ['sensor/sensor77', 'sensor/sensor01']
     for sensor in sensors:
         mqtt.subscribe(sensor)
 
+
+# send new mqtt message through socket
 @mqtt.on_message()
 def handle_mqtt_message(client, userdata, message):
     data = dict(

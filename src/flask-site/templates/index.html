@@ -34,14 +34,13 @@
     });
 
     // get a new message
-    {% for sensor in sensors %}
+    {% for s in sensors %}
       socket.on('mqtt_message', function(data) {
         var message = JSON.parse(data['payload'])
-        document.getElementById(message.sensor).innerHTML =
-          'Temperature: <br/>' + message.temp.toFixed(2) +
-          '<br/>' +
-          'Humidity: <br/>' + message.humd.toFixed(2);
-        document.getElementById( {{ sensor }} ).innerHTML = message.name;
+        // var t = message.sensor.concat("_temp")
+        document.getElementById(message.sensor.concat("_temp")).innerHTML = message.temp.toFixed(2)
+        document.getElementById(message.sensor.concat("_humd")).innerHTML = message.humd.toFixed(2);
+        // document.getElementById({{ sensor }}).innerHTML = message.name;
       })
     {% endfor %}
   });
@@ -50,49 +49,20 @@
 
 {% block content %}
 
-<ul>
+<div class="container pt-5">
   {% for sensor in sensors %}
-  <li>{{ sensor }}</li>
-  <p id="{{ sensor }}"></p>
-  {% endfor %}
-</ul>
-
-<!-- <div class="container-fluid">
-  <div class="row">
-    <div class="col-xs-6">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title" id="title"></h3>
-        </div>
-        <div class="panel-body">
-          <div class="col-xs-12">
-            <div class="row">
-              <div class="form-horizontal">
-                <div class="form-group">
-                  <label class="control-label col-xs-4">Sensor:</label>
-                  <div class="col-xs-8">
-                    <input id="subscribe_topic" class="form-control">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="col-xs-8 col-xs-offset-4">
-                    <button id="subscribe" class="btn btn-primary">Subscribe</button>
-                    <button id="unsubscribe" class="btn btn-default" style="display: none;" >Unsubscribe</button>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="col-xs-8">
-                    <h1>
-                      <p id="subscribe_messages"></p>
-                    </h1>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title" id="title">{{ sensor }}</h3>
+      </div>
+      <div class="panel-body">
+        <p>Temperature:</p>
+        <p id="{{ sensor }}_temp"><br/></p>
+        <p>Humidity</p>
+        <p id="{{ sensor }}_humd"><br/></p>
       </div>
     </div>
-  </div>
-</div> -->
+  {% endfor %}
+</div>
+
 {% endblock %}
