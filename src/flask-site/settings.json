@@ -1,0 +1,5 @@
+{
+    "sensors": ["sensor/sensor01", "sensor/sensor77", "sensor/sensor03"],
+    "cutpoints_temp": [65,75],
+    "cutpoints_humd": [45,65]
+}

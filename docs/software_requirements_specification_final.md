@@ -9,7 +9,10 @@ This system consists of three major components:
 
 Functional and non-functional requirements will be listed for each major component.
 
-# Functional Requirements
+# Software Requirements
+<Describe the structure of this section>
+
+<!-- # Functional Requirements
 
 1. **Remote Sensor(s)**
     1. Sensor(s) shall be capable of taking temperature readings.
@@ -76,13 +79,125 @@ Functional and non-functional requirements will be listed for each major compone
 1. **Web Interface**
     1. The web interface should be responsive and usable on a phone screen and/or other touch screen devices (while connected to the user's local network).
     1. Users should be able to access temperature and humidity logs, and either display them graphically or access them as data files.
-    1. Users should be able to set up password-authenticated access to the web interface.
+    1. Users should be able to set up password-authenticated access to the web interface. -->
 
 ## Functional Requirements
-### <Name of Feature 1>
+### Remote Sensors
 | ID | Requirement |
-| :-------------: | :----------: |
-| FR1 | <Requirement 1> |
-| FR2 | <Requirement 2> |
-| FR3 | <Requirement 3> |
+| -- | ----------- |
+| FR | Sensor(s) shall take temperature readings. |
+| FR | Sensor(s) shall record temperature in Celsius |
+| FR | Sensor(s) shall take humidity readings. |
+| FR | Sensor(s) shall record humidity as relative humidity |
+| FR | Sensor(s) shall use I2C for communication with the controller |
+| FR | Sensor(s) shall be compatible with BME280 specifications |
+| FR | Sensor(s) shall be cabable of interfacing with a wireless board compatible with ESP8266 specifications |
+| FR | Sensor(s) shall be capable of taking rapid temperature and humidity readings over a short period of time |
+
+### Wireless Board(s)
+| ID | Requirement |
+|--- | ----------- |
+| FR | The wireless board(s) shall be able to connect to a wireless network |
+| FR | The wireless board(s) shall be able to connect to a publish/subscribe broker |
+| FR | The wireless board(s) shall be able to publish on a specified topic name |
+| FR | The wireless board(s) shall publish averaged readings back to the base unit in a usable data form. |
+| FR | Sensor(s) should be capable of operating off of a Micro USB power cable |
+
+
+### Raspberry Pi
+| ID | Requirement |
+| -- | ----------- |
+| FR | The Raspberry Pi shall manage sensor(s) wirelessly. |
+| FR | The Raspberry Pi shall host a database to store sensor logs. |
+| FR | The Raspberry Pi shall host the server for the web interface. |
+| FR | The Raspberry Pi shall posess data analysis capabilities. |
+| FR | The Raspberry Pi shall be capable of continuous operation without external user intervention. |
+| FR | The Raspberry Pi shall be able to connect to a wireless network |
+
+### Web Server
+| ID | Requirement |
+| -- | ----------- |
+| FR | Users shall be able to access the web interface from a web browser on their local network. |
+| FR | The web server shall run on the Raspberry Pi unit. |
+| FR | The web server shall communicate with the publish/subscribe broker service running on the Raspberry Pi. |
+| FR | Uses shall be able to select Fahrenheit or Celsius for the display temperature |
+| FR | Users shall be able to set  upper and lower bounds (in degrees Fahrenheit or Celsius) for acceptable temperatures ranges. |
+| FR | Users shall be able to set upper and lower bounds (in percent relative humidity) for acceptable humidity ranges. |
+| FR | The web interface shall send a notification if either temperature or humidity drift out of the established acceptable range (see **functional requirements 3.3 and 3.4**). |
+
+### Web Dashboard
+| ID | Requirement |
+| FR | The web dashboard shall display the most recent averaged temperature reading. |
+| FR | The web dashboard shall display the most recent averaged humidity reading. |
+| FR | The web dashboard shall display temperature trends consisting of the last ten readings. |
+| FR | The web dashboard shall display humidity trends consisting of the last ten readings. |
+| FR | ... |
+
+## Non-Functional Requirements
+
+### Remote Sensors
+| ID | Requirement |
+| -- | ----------- |
+| NFR | Sensor(s) should accurately and reliably record and transmit temperature and humidity readings. |
+| NFR | Sensor(s) should be tolerant to measurement failure |
+| NFR | Sensor(s) should take averaged readings to minimize the effect of random fluctuations |
+| NFR | Sensor(s) should operate in a power-efficient manner |
+| NFR | Sensor should be connected to the wireless board with secure wiring |
+
+### Wireless Board(s)
+| ID | Requirement |
+|--- | ----------- |
+| NFR | Board should be powerable through Micro USB power |
+| NFR | Board should operate in a power-efficient manner |
+| NFR | Board should be small enough to fit |
+| NFR |  |
+| NFR |  |
+
+### Raspberry Pi Services
+| ID | Requirement |
+| -- | ----------- |
+| NFR | All systems (i.e., dashboard server, control program, and analysis/logging routines) should be able to run on at minimum a Raspberry Pi 3 Model B. |
+| NFR | All systems (i.e., dashboard server, control program, and analysis/logging routines) should be able to run concurrently with minimal slowdown perceived by the user. |
+| NFR | The base unit should be able to restart all services after a reboot without significant user intervention (see **functional requirement 2.5**). |
+| NFR | Users should be able to install all necessary files to install and run this service through a simple command line script. |
+
+### Web Server
+| ID | Requirement |
+| -- | ----------- |
+| NFR |  |
+| NFR |  |
+| NFR |  |
+| NFR |  |
+| NFR |  |
+
+### Web Dashboard
+| ID | Requirement |
+| -- | ----------- |
+| NFR | The web interface should be responsive and usable on a phone screen and/or other touch screen devices (while connected to the user's local network). |
+| NFR | Users should be able to access temperature and humidity logs, and either display them graphically or access them as data files. |
+| NFR | Users should be able to set up password-authenticated access to the web interface. |
+| NFR |  |
+| NFR |  |
+
+# Change Management Plan
+
+# Traceability links
+
+## Use Case Diagram Traceability
+| Artifact ID | Artifact Name | Requirement ID |
+| ----------- | ------------- | -------------- |
 | … | … | … |
+
+## Class Diagram Traceability
+| Artifact Name | Requirement ID |
+| ------------- | -------------- |
+| … | … | … |
+
+## Activity Diagram Traceability
+
+to the file and to those requirements impacted>
+| Artifact ID | Artifact Name | Requirement ID |
+| ----------- | ------------- | -------------- |
+| … | … | … |
+
+# Software Artifacts
