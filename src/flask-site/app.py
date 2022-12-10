@@ -38,6 +38,15 @@ def index():
         cpt_humd = settings['cutpoints_humd']
         unit     = settings["unit"]
 
+    global current_temp
+    global current_humd
+    current_temp = dict()
+    current_humd = dict()
+
+    for sensor in sensors:
+        current_temp[sensor['id']] = 'N/A'
+        current_humd[sensor['id']] = 'N/A'
+
     return render_template('index.html',
         sensors=sensors,
         cpt_temp=cpt_temp,
