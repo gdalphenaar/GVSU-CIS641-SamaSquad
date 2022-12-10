@@ -38,13 +38,6 @@ def index():
         cpt_humd = settings['cutpoints_humd']
         unit     = settings["unit"]
 
-    current_temp = dict()
-    current_humd = dict()
-
-    for sensor in sensors:
-        current_temp[sensor['id']] = '0.0'
-        current_humd[sensor['id']] = 'asdf'
-
     return render_template('index.html',
         sensors=sensors,
         cpt_temp=cpt_temp,
@@ -77,9 +70,9 @@ def handle_subscribe(json_str):
 
 
 # reset and unsubscribe to all
-@socketio.on('unsubscribe_all')
-def handle_unsubscribe_all():
-    mqtt.unsubscribe_all()
+@socketio.on('unsubscribe')
+def handle_unsubscribe(r):
+    mqtt.unsubscribe(r)
 
 
 # if server is shut down or mqtt connection lost, resubscribe on mqtt (re)connect

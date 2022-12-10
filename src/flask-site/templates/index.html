@@ -74,9 +74,9 @@
       </div>
       <div class="panel-body">
         <p>Temperature:</p>
-        <p id="{{ sensor.id }}_temp">temp</p>
+        <p id="{{ sensor.id }}_temp">{{ current_temp[sensor.id] }}</p>
         <p>Humidity:</p>
-        <p id="{{ sensor.id }}_humd">humd</p>
+        <p id="{{ sensor.id }}_humd">{{ current_humd[sensor.id] }}</p>
       </div>
     </div>
   {% endfor %}
