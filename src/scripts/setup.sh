@@ -1,14 +1,14 @@
 # install mosquitto
 sudo apt install -y mosquitto mosquitto-clients
-echo "listener 1883" >> /etc/mosquitto/mosquitto.conf
-echo "allow_anomymous true" >> /etc/mosquitto/mosquitto.conf
+echo "allow anonymous true" | sudo tee --append /etc/mosquitto/mosquitto.conf
+echo "listener 1883" | sudo tee --append /etc/mosquitto/mosquitto.conf
 sudo systemctl enable mosquitto.service
 sudo systemctl start mosquitto
 
 
 # install mongodb
-curl -fsSL https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
-echo "deb https://repo.mongodb.org/apt/debian buster/mongodb-org/5.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
-sudo apt update
-sudo apt install -y mongodb-org
-sudo systemctl start mongod
+# curl -fsSL https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+# echo "deb https://repo.mongodb.org/apt/debian buster/mongodb-org/5.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+# sudo apt update
+# sudo apt install -y mongodb-org
+# sudo systemctl start mongod
