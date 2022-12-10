@@ -9,15 +9,14 @@
     var socket = io.connect('http://' + document.domain + ':' + location.port);
 
     // subscribe to a topic
-    $('#subscribe').click(function(event) {
-      var topic = $('#subscribe_topic').val();
-      var qos = $('#subscribe_qos').val();
-      var data = '{"topic": "' + topic + '", "qos": ' + 1 + '}';
-      socket.emit('subscribe', data=data);
-      $('#subscribe').hide();
-      $('#unsubscribe').show();
-      $('#subscribe_topic').prop('readonly', true);
-    });
+    document.getElementById("subscribe").onclick = function() {
+      var sensor = $('#sensor_id').val();
+      var name = $('#sensor_name').val();
+      // new_sensor = {"id":sensor, "name":name};
+      var new_sensor = '{"id": "' + sensor + '", "name": "' + name + '"}';
+      console.log(new_sensor);
+      socket.emit('subscribe', data=new_sensor)
+    }
 
     // unsubscribe from a topic
     {% for sensor in sensors %}
@@ -38,12 +37,30 @@
       <h3 class="panel-title">Add New</h3>
     </div>
     <div class="panel-body">
+      <div class="form-group">
+        <label class="control-label col-xs-4">Sensor ID: </label>
+        <div class="col-xs-8">
+          <input id="sensor_id" class="form-control">
+        </div>
+      </div>
+      <br/><br/>
+      <div class="form-group">
+        <label class="control-label col-xs-4">Sensor Name: </label>
+        <div class="col-xs-8">
+          <input id="sensor_name" class="form-control">
+        </div>
+      </div>
+      <br/><br/>
+      <div class="col-xs-8 col-xs-offset-4">
+        <button id="subscribe" class="btn">Subscribe</button>
+      </div>
+    </div>
   </div>
-</div>
   {% for sensor in sensors %}
     <div class="panel panel-default" id="{{ sensor.id }}">
       <div class="panel-heading">
         <h3 class="panel-title" id="title">{{ sensor.name }}</h3>
+        <p>{{sensor.id}}</p>
       </div>
       <div class="panel-body">
         <div class="form-group">

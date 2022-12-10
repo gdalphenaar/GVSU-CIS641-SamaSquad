@@ -70,7 +70,9 @@
   {% for sensor in sensors %}
     <div  id="{{ sensor.id }}" class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">{{ sensor.name }}</h3>
+        <h1 class="panel-title">{{ sensor.name }}</h1>
+        <br/>
+        <p>{{ sensor.id }}</p>
       </div>
       <div class="panel-body">
         <p>Temperature:</p>

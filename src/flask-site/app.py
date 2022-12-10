@@ -30,8 +30,8 @@ bootstrap = Bootstrap(app)
 @app.route('/')
 def index():
     # load settings from config
-    with open('settings.json', 'r') as myfile:
-        data = myfile.read()
+    with open('settings.json', 'r') as file:
+        data = file.read()
         settings = json.loads(data)
         sensors  = settings['sensors']
         cpt_temp = settings['cutpoints_temp']
@@ -74,13 +74,39 @@ def add():
 # handle new topic/sensor subscription
 @socketio.on('subscribe')
 def handle_subscribe(json_str):
-    data = json.loads(json_str)
-    mqtt.subscribe(data['topic'], data['qos'])
+    new_sensor = json.loads(str(json_str))
+    print(new_sensor)
+    # add sensor from settings.json
+    with open('settings.json', 'r') as file:
+        data = file.read()
+        settings = json.loads(data)
+        sensors  = settings['sensors']
+    print(sensors)
+    sensors.append(new_sensor)
+    print(sensors)
+    print(settings)
+    with open('settings.json', 'w') as file:
+        json.dump(settings, file, indent=4)
+    mqtt.subscribe(new_sensor['id'])
 
 
 # reset and unsubscribe to all
 @socketio.on('unsubscribe')
 def handle_unsubscribe(r):
+
+    # remove sensor from settings.json
+    with open('settings.json', 'r') as file:
+        data = file.read()
+        settings = json.loads(data)
+        sensors  = settings['sensors']
+    for i in range(len(sensors)):
+        if sensors[i]['id'] == r:
+            sensors.remove(sensors[i])
+            break
+    with open('settings.json', 'w') as file:
+        json.dump(settings, file, indent=4)
+
+    # and unsubscribe
     mqtt.unsubscribe(r)
 
 
@@ -88,8 +114,8 @@ def handle_unsubscribe(r):
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
     # sensors = ['sensor/sensor77', 'sensor/sensor01']
-    with open('settings.json', 'r') as myfile:
-        data = myfile.read()
+    with open('settings.json', 'r') as file:
+        data = file.read()
         settings = json.loads(data)
         sensors  = settings['sensors']
     for sensor in sensors:
