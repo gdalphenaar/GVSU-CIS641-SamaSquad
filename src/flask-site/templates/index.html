@@ -32,46 +32,47 @@
     socket.on('mqtt_message', function(data) {
 
       // parse message payload
-      var message = JSON.parse(data['payload'])
+      var message = JSON.parse(data['payload']);
 
-      var cpt_temp_h = '{{cpt_temp.high}}'
-      var cpt_temp_l = '{{cpt_temp.low}}'
+      var cpt_temp_h = '{{ cpt_temp.high }}';
+      var cpt_temp_l = '{{ cpt_temp.low }}';
+      var cpt_humd_h = '{{ cpt_humd.high }}';
+      var cpt_humd_l = '{{ cpt_humd.low }}';
 
       var humd = message.humd.toFixed(1);
 
       // convert default C to F
       if ("{{ unit }}" == "F") {
         var temp = (((9/5) * message.temp) + 32).toFixed(1);
-        // var cpt_temp_h = (((9/5) * '{{cpt_temp.high}}') + 32).toFixed(1);
-        // var cpt_temp_l = (((9/5) * '{{cpt_temp.low}}') + 32).toFixed(1);
       }
       else {
         var temp = message.temp.toFixed(1);
-        // var x = '{{cpt_temp.high}}'
-        // var cpt_temp_h = '{{cpt_temp.high}}'
-        // var cpt_temp_l = '{{cpt_temp.low}}'
+      }
+
+      // handle general out-of-rangedness
+      if (temp > cpt_temp_h || temp < cpt_temp_l || humd > cpt_humd_h || humd < cpt_humd_l) {
+        document.getElementById(message.sensor).className = "panel panel-danger";
+      }
+      else {
+        document.getElementById(message.sensor).className = "panel panel-success";
       }
 
       // handle temperature out of range
       if (temp > cpt_temp_h || temp < cpt_temp_l) {
-        document.getElementById(message.sensor).className = "panel panel-danger";
         document.getElementById(message.sensor.concat('_temp_title')).className = "text-danger";
         document.getElementById(message.sensor.concat("_temp")).className = "text-danger";
       }
       else {
-        document.getElementById(message.sensor).className = "panel panel-success";
         document.getElementById(message.sensor.concat('_temp_title')).className = "text-body";
         document.getElementById(message.sensor.concat("_temp")).className = "text-body";
       }
 
       // handle humidity out of range
-      if (humd > '{{ cpt_humd.high }}' || humd < '{{ cpt_humd.low }}') {
-        document.getElementById(message.sensor).className = "panel panel-danger";
+      if (humd > cpt_humd_h || humd < cpt_humd_l) {
         document.getElementById(message.sensor.concat('_humd_title')).className = "text-danger";
         document.getElementById(message.sensor.concat("_humd")).className = "text-danger";
       }
       else {
-        document.getElementById(message.sensor).className = "panel panel-success";
         document.getElementById(message.sensor.concat('_humd_title')).className = "text-body";
         document.getElementById(message.sensor.concat("_humd")).className = "text-body";
       }

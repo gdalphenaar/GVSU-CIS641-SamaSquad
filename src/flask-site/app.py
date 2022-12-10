@@ -124,6 +124,19 @@ def set_temp_cpt(msg):
         json.dump(settings, file, indent=2)
 
 
+@socketio.on('change_unit')
+def change_units(unit):
+    with open('settings.json', 'r') as file:
+        data = file.read()
+        settings = json.loads(data)
+    print(settings['unit'])
+    print(unit)
+    settings['unit'] = unit
+    print(settings)
+    with open('settings.json', 'w') as file:
+        json.dump(settings, file, indent=2)
+
+
 # reset and unsubscribe to all
 @socketio.on('unsubscribe')
 def handle_unsubscribe(sensor):

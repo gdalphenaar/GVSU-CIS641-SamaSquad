@@ -9,6 +9,8 @@
     // connect socket.io
     var socket = io.connect('http://' + document.domain + ':' + location.port);
 
+    var UNIT = '{{ unit }}';
+
     //change humidity cutpoints
     document.getElementById("change_humd").onclick = function() {
       var humd_lower = $('#humd_lower').val();
@@ -33,6 +35,42 @@
     document.getElementById("temp_lower").value='{{ cpt_temp.low }}';
     document.getElementById("temp_upper").value='{{ cpt_temp.high }}';
 
+    if ("{{ unit }}" == "F") {
+      var current_unit = "Fahrenheit (F)";
+    }
+    else if ("{{ unit }}" == "C") {
+      var current_unit = "Celsius (C)";
+    }
+    document.getElementById("units_btn").innerHTML = current_unit;
+
+    document.getElementById("toggle_F").onclick = function() {
+      if (UNIT== "C") {
+        var temp_lower = (($('#temp_lower').val() * (9/5)) +32).toFixed(0);
+        var temp_upper = (($('#temp_upper').val() * (9/5)) + 32).toFixed(0);
+        var cpt_temp = '{"low": ' + temp_lower+ ', "high": ' + temp_upper + '}';
+        document.getElementById("temp_lower").value=temp_lower;
+        document.getElementById("temp_upper").value=temp_upper;
+        socket.emit('set_temp_cpt', data=cpt_temp)
+      }
+      UNIT = "F";
+      document.getElementById("units_btn").innerHTML = "Fahrenheit (F)";
+      socket.emit('change_unit', data="F")
+    }
+
+    document.getElementById("toggle_C").onclick = function() {
+      if (UNIT == "F") {
+        var temp_lower = (($('#temp_lower').val() - 32) * (5/9)).toFixed(0);
+        var temp_upper = (($('#temp_upper').val() - 32) * (5/9)).toFixed(0);
+        var cpt_temp = '{"low": ' + temp_lower+ ', "high": ' + temp_upper + '}';
+        document.getElementById("temp_lower").value=temp_lower;
+        document.getElementById("temp_upper").value=temp_upper;
+        socket.emit('set_temp_cpt', data=cpt_temp);
+      }
+      UNIT = "C";
+      document.getElementById("units_btn").innerHTML = "Celsius (C)";
+      socket.emit('change_unit', data="C")
+    }
+
   });
 </script>
 {% endblock %}
@@ -50,11 +88,11 @@
     <div class="row">
       <div class="col-sm-6">
         <p>Lower:</p>
-        <input id="humd_lower" class="form-control">
+        <input id="humd_lower" class="form-control text-center">
       </div>
       <div class="col-sm-6">
         <p>Upper:</p>
-        <input id="humd_upper" class="form-control">
+        <input id="humd_upper" class="form-control text-center">
       </div>
     </div>
     <br/><br/>
@@ -75,11 +113,11 @@
     <div class="row">
       <div class="col-sm-6">
         <p>Lower:</p>
-        <input id="temp_lower" class="form-control">
+        <input id="temp_lower" class="form-control text-center">
       </div>
       <div class="col-sm-6">
         <p>Upper:</p>
-        <input id="temp_upper" class="form-control">
+        <input id="temp_upper" class="form-control text-center">
       </div>
     </div>
     <br/><br/>
@@ -89,12 +127,25 @@
   </div>
 </div>
 
-<div class="dropdown">
-  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
-  <span class="caret"></span></button>
-  <ul class="dropdown-menu">
-    <li><a href="#">Fahrenheit (F)</a></li>
-    <li><a href="#">Celsius (C)</a></li>
-  </ul>
+<div class="panel panel-default text-center">
+
+  <div class="panel-heading">
+    <h1 class="panel-title">Change Temperature Units</h1>
+  </div>
+
+  <div class="panel-body">
+    Note: due to rounding, upper and lower temperature ranges may change slightly. Please adjust above if necessary.
+    <br/><br/>
+    <div class="dropdown btn-group">
+      <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" id="units_btn">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-center">
+        <li><a class="dropdown-item" id="toggle_F" href="#">Fahrenheit (F)</a></li>
+        <li><a class="dropdown-item" id="toggle_C" href="#">Celsius (C)</a></li>
+      </ul>
+    </div>
 </div>
+
+
 {% endblock %}
