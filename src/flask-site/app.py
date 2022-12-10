@@ -11,9 +11,10 @@ from flask_bootstrap import Bootstrap
 app = Flask(__name__)
 app.config['SECRET'] = 'my secret key'
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-app.config['MQTT_BROKER_URL'] = '192.168.56.19'
+app.config['MQTT_BROKER_URL'] = '192.168.1.77'
 app.config['MQTT_BROKER_PORT'] = 1883
 app.config['MQTT_CLEAN_SESSION'] = True
+app.config['MQTT_KEEPALIVE'] = 30
 app.config['MQTT_USERNAME'] = ''
 app.config['MQTT_PASSWORD'] = ''
 app.config['MQTT_TLS_ENABLED'] = False
@@ -35,13 +36,37 @@ def index():
         sensors  = settings['sensors']
         cpt_temp = settings['cutpoints_temp']
         cpt_humd = settings['cutpoints_humd']
-    print(cpt_humd)
-    print(cpt_temp)
+        unit     = settings["unit"]
+
+    current_temp = dict()
+    current_humd = dict()
+
+    for sensor in sensors:
+        current_temp[sensor['id']] = '0.0'
+        current_humd[sensor['id']] = 'asdf'
+
     return render_template('index.html',
         sensors=sensors,
         cpt_temp=cpt_temp,
-        cpt_humd=cpt_humd
+        cpt_humd=cpt_humd,
+        unit=unit,
+        current_temp = current_temp,
+        current_humd = current_humd
     )
+
+
+@app.route('/settings')
+def settings():
+    return render_template('settings.html')
+
+
+@app.route('/manage')
+def add():
+    with open('settings.json', 'r') as myfile:
+        data = myfile.read()
+        settings = json.loads(data)
+        sensors  = settings['sensors']
+    return render_template('manage.html', sensors=sensors)
 
 
 # handle new topic/sensor subscription
@@ -57,7 +82,7 @@ def handle_unsubscribe_all():
     mqtt.unsubscribe_all()
 
 
-# if server is shut down or mqtt connection lost, resubscribe on mwtt (re)connect
+# if server is shut down or mqtt connection lost, resubscribe on mqtt (re)connect
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
     # sensors = ['sensor/sensor77', 'sensor/sensor01']
@@ -66,7 +91,7 @@ def handle_connect(client, userdata, flags, rc):
         settings = json.loads(data)
         sensors  = settings['sensors']
     for sensor in sensors:
-        mqtt.subscribe(sensor)
+        mqtt.subscribe(sensor['id'], 2)
 
 
 # send new mqtt message through socket

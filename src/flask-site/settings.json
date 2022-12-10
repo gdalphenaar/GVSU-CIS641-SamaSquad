@@ -1,5 +1,10 @@
 {
-    "sensors": ["sensor/sensor01", "sensor/sensor77", "sensor/test"],
-    "cutpoints_temp": [65,75],
-    "cutpoints_humd": [45,65]
+    "sensors": [
+        {"id":"sensor/sensor01", "name":"test1"},
+        {"id":"sensor/sensor77", "name":"test2"},
+        {"id":"sensor/sensor03", "name":"test3"}
+    ],
+    "cutpoints_temp": {"low":0, "high":30},
+    "cutpoints_humd": {"low":45, "high":65},
+    "unit":"C"
 }

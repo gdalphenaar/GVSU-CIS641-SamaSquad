@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
 
-  NAME = "debian-pi-emulator"
+  NAME = "sensor_test"
 
   config.vm.box = "debian/bullseye64"
   config.vm.box_check_update = false
