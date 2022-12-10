@@ -2,16 +2,24 @@
   "sensors": [
     {
       "id": "sensor/sensor01",
-      "name": "Bedroom"
+      "name": "test1"
+    },
+    {
+      "id": "sensor/sensor77",
+      "name": "test2"
+    },
+    {
+      "id": "sensor/sensor03",
+      "name": "Test"
     }
   ],
   "cutpoints_temp": {
-    "low": 68,
-    "high": 75
+    "low": 20,
+    "high": 30
   },
   "cutpoints_humd": {
     "low": 45,
     "high": 65
   },
-  "unit": "F"
+  "unit": "C"
 }

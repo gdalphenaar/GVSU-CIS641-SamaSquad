@@ -51,6 +51,7 @@
 
       // handle general out-of-rangedness
       if (temp > cpt_temp_h || temp < cpt_temp_l || humd > cpt_humd_h || humd < cpt_humd_l) {
+        console.log('{{ current_temp }}')
         document.getElementById(message.sensor).className = "panel panel-danger";
       }
       else {
@@ -105,11 +106,11 @@
         <div class="row">
           <div class="col-sm-6">
             <p id="{{ sensor.id }}_humd_title">Humidity:</p>
-            <p id="{{ sensor.id }}_humd">{{ current_humd[sensor.id] }}</p>
+            <p id="{{ sensor.id }}_humd">{{ current_humd[sensor.id] }}% RH</p>
           </div>
           <div class="col-sm-6">
             <p id="{{ sensor.id }}_temp_title">Temperature:</p>
-            <p id="{{ sensor.id }}_temp">{{ current_temp[sensor.id] }}</p>
+            <p id="{{ sensor.id }}_temp">{{ current_temp[sensor.id] }}&#176{{ unit }}</p>
           </div>
         </div>
       </div>

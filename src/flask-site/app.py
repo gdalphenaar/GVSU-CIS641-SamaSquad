@@ -6,6 +6,7 @@ from flask import Flask, render_template
 from flask_mqtt import Mqtt
 from flask_socketio import SocketIO
 from flask_bootstrap import Bootstrap
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -34,25 +35,12 @@ def index():
     with open('settings.json', 'r') as file:
         data = file.read()
         settings = json.loads(data)
-        sensors  = settings['sensors']
-        cpt_temp = settings['cutpoints_temp']
-        cpt_humd = settings['cutpoints_humd']
-        unit     = settings["unit"]
-
-    global current_temp
-    global current_humd
-    current_temp = dict()
-    current_humd = dict()
-
-    for sensor in sensors:
-        current_temp[sensor['id']] = 'N/A'
-        current_humd[sensor['id']] = 'N/A'
 
     return render_template('index.html',
-        sensors=sensors,
-        cpt_temp=cpt_temp,
-        cpt_humd=cpt_humd,
-        unit=unit,
+        sensors=settings['sensors'],
+        cpt_temp=settings['cutpoints_temp'],
+        cpt_humd=settings['cutpoints_humd'],
+        unit=settings["unit"],
         current_temp = current_temp,
         current_humd = current_humd
     )
@@ -60,9 +48,12 @@ def index():
 
 @app.route('/settings')
 def settings():
+
+    # load settings to show on page
     with open('settings.json', 'r') as file:
         data = file.read()
         settings = json.loads(data)
+
     return render_template(
         'settings.html',
         cpt_temp = settings['cutpoints_temp'],
@@ -104,35 +95,44 @@ def handle_subscribe(json_str):
     mqtt.subscribe(new_sensor['id'])
 
 
+# set humidity cutpoints
 @socketio.on('set_humd_cpt')
 def set_humd_ctp(msg):
+
     with open('settings.json', 'r') as file:
         data = file.read()
         settings = json.loads(data)
+
     settings['cutpoints_humd'] = json.loads(str(msg))
+
     with open('settings.json', 'w') as file:
         json.dump(settings, file, indent=2)
 
 
+# set temperature cutpoints
 @socketio.on('set_temp_cpt')
 def set_temp_cpt(msg):
+
     with open('settings.json', 'r') as file:
         data = file.read()
         settings = json.loads(data)
+
     settings['cutpoints_temp'] = json.loads(str(msg))
+
     with open('settings.json', 'w') as file:
         json.dump(settings, file, indent=2)
 
 
+# change temperature units
 @socketio.on('change_unit')
 def change_units(unit):
+
     with open('settings.json', 'r') as file:
         data = file.read()
         settings = json.loads(data)
-    print(settings['unit'])
-    print(unit)
+
     settings['unit'] = unit
-    print(settings)
+
     with open('settings.json', 'w') as file:
         json.dump(settings, file, indent=2)
 
@@ -173,6 +173,17 @@ def handle_connect(client, userdata, flags, rc):
     for sensor in sensors:
         mqtt.subscribe(sensor['id'], 2)
 
+    # global variables for current temp and humidity
+    global current_temp
+    global current_humd
+    current_temp = dict()
+    current_humd = dict()
+
+    # start off NA
+    for sensor in sensors:
+        current_temp[sensor['id']] = 'N/A'
+        current_humd[sensor['id']] = 'N/A'
+
 
 # send new mqtt message through socket
 @mqtt.on_message()
@@ -181,6 +192,10 @@ def handle_mqtt_message(client, userdata, message):
         topic=message.topic,
         payload=message.payload.decode()
     )
+
+    # fill current temp / humidity with most recent value
+    current_temp[data['topic']] = round(json.loads(data['payload'])['temp'], 1)
+    current_humd[data['topic']] = round(json.loads(data['payload'])['humd'], 1)
     socketio.emit('mqtt_message', data=data)
 
 
