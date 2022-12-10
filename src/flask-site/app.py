@@ -29,6 +29,7 @@ bootstrap = Bootstrap(app)
 
 @app.route('/')
 def index():
+
     # load settings from config
     with open('settings.json', 'r') as file:
         data = file.read()
@@ -59,61 +60,99 @@ def index():
 
 @app.route('/settings')
 def settings():
-    return render_template('settings.html')
+    with open('settings.json', 'r') as file:
+        data = file.read()
+        settings = json.loads(data)
+    return render_template(
+        'settings.html',
+        cpt_temp = settings['cutpoints_temp'],
+        cpt_humd = settings['cutpoints_humd'],
+        unit     = settings['unit']
+    )
 
 
 @app.route('/manage')
 def add():
+
+    # read sensors from settings
     with open('settings.json', 'r') as myfile:
         data = myfile.read()
         settings = json.loads(data)
         sensors  = settings['sensors']
+
     return render_template('manage.html', sensors=sensors)
 
 
 # handle new topic/sensor subscription
 @socketio.on('subscribe')
 def handle_subscribe(json_str):
+
+    # get new sensor from socket.io message
     new_sensor = json.loads(str(json_str))
-    print(new_sensor)
-    # add sensor from settings.json
+
+    # load sensors list settings.json
     with open('settings.json', 'r') as file:
         data = file.read()
         settings = json.loads(data)
         sensors  = settings['sensors']
-    print(sensors)
+
+    # add new sensor
     sensors.append(new_sensor)
-    print(sensors)
-    print(settings)
     with open('settings.json', 'w') as file:
-        json.dump(settings, file, indent=4)
+        json.dump(settings, file, indent=2)
+
     mqtt.subscribe(new_sensor['id'])
+
+
+@socketio.on('set_humd_cpt')
+def set_humd_ctp(msg):
+    with open('settings.json', 'r') as file:
+        data = file.read()
+        settings = json.loads(data)
+    settings['cutpoints_humd'] = json.loads(str(msg))
+    with open('settings.json', 'w') as file:
+        json.dump(settings, file, indent=2)
+
+
+@socketio.on('set_temp_cpt')
+def set_temp_cpt(msg):
+    with open('settings.json', 'r') as file:
+        data = file.read()
+        settings = json.loads(data)
+    settings['cutpoints_temp'] = json.loads(str(msg))
+    with open('settings.json', 'w') as file:
+        json.dump(settings, file, indent=2)
 
 
 # reset and unsubscribe to all
 @socketio.on('unsubscribe')
-def handle_unsubscribe(r):
+def handle_unsubscribe(sensor):
 
-    # remove sensor from settings.json
+    # load sensors list settings.json
     with open('settings.json', 'r') as file:
         data = file.read()
         settings = json.loads(data)
         sensors  = settings['sensors']
+
+    # remove matching sensor
     for i in range(len(sensors)):
-        if sensors[i]['id'] == r:
+        if sensors[i]['id'] == sensor:
             sensors.remove(sensors[i])
             break
+
+    # save settings
     with open('settings.json', 'w') as file:
-        json.dump(settings, file, indent=4)
+        json.dump(settings, file, indent=2)
 
     # and unsubscribe
-    mqtt.unsubscribe(r)
+    mqtt.unsubscribe(sensor)
 
 
 # if server is shut down or mqtt connection lost, resubscribe on mqtt (re)connect
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
-    # sensors = ['sensor/sensor77', 'sensor/sensor01']
+
+    # load and subscribe to sensors on initial connection to mqtt
     with open('settings.json', 'r') as file:
         data = file.read()
         settings = json.loads(data)
@@ -127,8 +166,7 @@ def handle_connect(client, userdata, flags, rc):
 def handle_mqtt_message(client, userdata, message):
     data = dict(
         topic=message.topic,
-        payload=message.payload.decode(),
-        qos=message.qos,
+        payload=message.payload.decode()
     )
     socketio.emit('mqtt_message', data=data)
 

@@ -1,4 +1,3 @@
-<!-- based on https://github.com/stlehmann/Flask-MQTT/tree/master/example from the author of Flask-MQTT -->
 {% extends 'components/base.html' %}
 
 {% block scripts %}
@@ -6,35 +5,37 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
+
+    // connect socket.io
     var socket = io.connect('http://' + document.domain + ':' + location.port);
 
-    // subscribe to a topic
+    // add a new sensor
     document.getElementById("subscribe").onclick = function() {
       var sensor = $('#sensor_id').val();
       var name = $('#sensor_name').val();
-      // new_sensor = {"id":sensor, "name":name};
       var new_sensor = '{"id": "' + sensor + '", "name": "' + name + '"}';
       console.log(new_sensor);
       socket.emit('subscribe', data=new_sensor)
     }
 
-    // unsubscribe from a topic
+    // remove an existing sensor - loop through sensors to get list
     {% for sensor in sensors %}
       document.getElementById("{{ sensor.id }}_unsub").onclick = function() {
         var panel = document.getElementById("{{ sensor.id }}");
         panel.remove();
         socket.emit('unsubscribe', sensor = "{{ sensor.id }}")
-      };
+      }
     {% endfor %}
   });
 </script>
 {% endblock %}
 
 {% block content %}
+<!-- add a new sensor -->
 <div class="container">
   <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Add New</h3>
+    <div class="panel-heading text-center">
+      <h3 class="panel-title">Add New Sensor</h3>
     </div>
     <div class="panel-body">
       <div class="form-group">
@@ -51,25 +52,39 @@
         </div>
       </div>
       <br/><br/>
-      <div class="col-xs-8 col-xs-offset-4">
+      <div class="text-center">
         <button id="subscribe" class="btn">Subscribe</button>
       </div>
     </div>
   </div>
+  <!-- loop through sensors - remove existing -->
   {% for sensor in sensors %}
     <div class="panel panel-default" id="{{ sensor.id }}">
-      <div class="panel-heading">
+      <div class="panel-heading text-center">
         <h3 class="panel-title" id="title">{{ sensor.name }}</h3>
         <p>{{sensor.id}}</p>
       </div>
       <div class="panel-body">
-        <div class="form-group">
-          <div class="col-xs-8 col-xs-offset-4">
+        <div class="form-group text-center">
             <button id="{{ sensor.id }}_unsub" class="btn">Unsubscribe</button>
-          </div>
         </div>
       </div>
     </div>
   {% endfor %}
-</div>
+
+  <!-- remove ALL -->
+  <!-- <div class="panel panel-default">
+    <div class="panel-heading text-center">
+      <h3 class="panel-title">Remove All</h3>
+    </div>
+    <div class="panel-body">
+      <div class="panel-body">
+        <div class="form-group text-center">
+          <p>Warning! This will remove <em>all</em> sensors from your dashboard</p>
+          <button id="unsubscribe_all" class="btn">Unsubscribe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
 {% endblock %}

@@ -5,6 +5,8 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
+
+    // connect socket.io
     var socket = io.connect('http://' + document.domain + ':' + location.port);
 
     // subscribe to a topic
@@ -32,53 +34,83 @@
       // parse message payload
       var message = JSON.parse(data['payload'])
 
+      var cpt_temp_h = '{{cpt_temp.high}}'
+      var cpt_temp_l = '{{cpt_temp.low}}'
+
+      var humd = message.humd.toFixed(1);
+
       // convert default C to F
       if ("{{ unit }}" == "F") {
         var temp = (((9/5) * message.temp) + 32).toFixed(1);
-        var cpt_temp_h = (((9/5) * '{{cpt_temp.high}}') + 32).toFixed(1);
-        var cpt_temp_l = (((9/5) * '{{cpt_temp.low}}') + 32).toFixed(1);
+        // var cpt_temp_h = (((9/5) * '{{cpt_temp.high}}') + 32).toFixed(1);
+        // var cpt_temp_l = (((9/5) * '{{cpt_temp.low}}') + 32).toFixed(1);
       }
       else {
-        var temp = message.temp.toFixed(2);
-        var x = '{{cpt_temp.high}}'
-        var cpt_temp_h = '{{cpt_temp.high}}'
-        var cpt_temp_l = '{{cpt_temp.low}}'
+        var temp = message.temp.toFixed(1);
+        // var x = '{{cpt_temp.high}}'
+        // var cpt_temp_h = '{{cpt_temp.high}}'
+        // var cpt_temp_l = '{{cpt_temp.low}}'
+      }
+
+      // handle temperature out of range
+      if (temp > cpt_temp_h || temp < cpt_temp_l) {
+        document.getElementById(message.sensor).className = "panel panel-danger";
+        document.getElementById(message.sensor.concat('_temp_title')).className = "text-danger";
+        document.getElementById(message.sensor.concat("_temp")).className = "text-danger";
+      }
+      else {
+        document.getElementById(message.sensor).className = "panel panel-success";
+        document.getElementById(message.sensor.concat('_temp_title')).className = "text-body";
+        document.getElementById(message.sensor.concat("_temp")).className = "text-body";
+      }
+
+      // handle humidity out of range
+      if (humd > '{{ cpt_humd.high }}' || humd < '{{ cpt_humd.low }}') {
+        document.getElementById(message.sensor).className = "panel panel-danger";
+        document.getElementById(message.sensor.concat('_humd_title')).className = "text-danger";
+        document.getElementById(message.sensor.concat("_humd")).className = "text-danger";
+      }
+      else {
+        document.getElementById(message.sensor).className = "panel panel-success";
+        document.getElementById(message.sensor.concat('_humd_title')).className = "text-body";
+        document.getElementById(message.sensor.concat("_humd")).className = "text-body";
       }
 
       // display reading values
       document.getElementById(message.sensor.concat("_temp")).innerHTML = temp +  '&#176' + '{{ unit }}';
-      document.getElementById(message.sensor.concat("_humd")).innerHTML = message.humd.toFixed(2) + '% RH';
-
-      // handle values outside of range
-      if (temp >= cpt_temp_h || temp < cpt_temp_l) {
-        document.getElementById(message.sensor).className = "panel panel-danger";
-      }
-      else if (message.humd >= '{{ cpt_humd.high }}' || message.humd <= '{{ cpt_humd.low }}') {
-        document.getElementById(message.sensor).className = "panel panel-danger";
-      }
-      else {
-        document.getElementById(message.sensor).className = "panel panel-success";
-      }
+      document.getElementById(message.sensor.concat("_humd")).innerHTML = humd + '% RH';
 
     })
   });
 </script>
 {% endblock %}
 
+<!-- loop through subscribed sensors in settings.json: one panel per sensor -->
 {% block content %}
 <div class="container text-center">
   {% for sensor in sensors %}
+  <!-- set panel id based on sensor id -->
     <div  id="{{ sensor.id }}" class="panel panel-default">
+
+      <!-- include sensor ``friendly`` name and id in title bar -->
       <div class="panel-heading">
         <h1 class="panel-title">{{ sensor.name }}</h1>
         <br/>
         <p>{{ sensor.id }}</p>
       </div>
+
+      <!-- show temp and humidity -->
       <div class="panel-body">
-        <p>Temperature:</p>
-        <p id="{{ sensor.id }}_temp">{{ current_temp[sensor.id] }}</p>
-        <p>Humidity:</p>
-        <p id="{{ sensor.id }}_humd">{{ current_humd[sensor.id] }}</p>
+        <div class="row">
+          <div class="col-sm-6">
+            <p id="{{ sensor.id }}_humd_title">Humidity:</p>
+            <p id="{{ sensor.id }}_humd">{{ current_humd[sensor.id] }}</p>
+          </div>
+          <div class="col-sm-6">
+            <p id="{{ sensor.id }}_temp_title">Temperature:</p>
+            <p id="{{ sensor.id }}_temp">{{ current_temp[sensor.id] }}</p>
+          </div>
+        </div>
       </div>
     </div>
   {% endfor %}
