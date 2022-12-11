@@ -31,7 +31,7 @@ The goal for this project is to build a Raspberry Pi-controlled temperature and 
     1. From this folder, navigate to `/src/scripts` and run `setup.sh`. This will download the Mosquitto MQTT broker and start the web dashboard. At this point, you can navigate to the IP address you found earlier at port 8080 in a web browser. You'll see nothing at this point, because no sensors have been set up.
 <br/><br/>
 1. Set Up Sensors
-    1. Create a sketch in Arduino IDE using `/src/sensors/sensor.ino` and import the necessary external libraries.
+    1. Create a sketch in Arduino IDE using `/src/sensors/sensor.ino` and import the necessary external libraries using the IDE's interface.
     1. Replace `WIFI_SSID` and `WIFI_PASSWORD` with your WiFi network and credentials, respectively.
     1. Replace `MQTT_HOST` with the IP address of your Raspberry Pi. Keep `MQTT_PORT` as 1883, unless you changed the MQTT listener port.
     1. Replace `MQTT_PUB_NAME` with the name/ID you want this sensor to publish under. Remember this name, as this is what you will use to make the dashboard listen to the sensors
