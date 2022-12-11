@@ -5,7 +5,6 @@ import logging, eventlet, json
 from flask import Flask, render_template
 from flask_mqtt import Mqtt
 from flask_socketio import SocketIO
-from flask_bootstrap import Bootstrap
 from datetime import datetime
 
 
@@ -25,7 +24,6 @@ eventlet.monkey_patch()
 mqtt = Mqtt(app)
 socketio = SocketIO(app)
 socketio.init_app(app, cors_allowed_origins="*")
-bootstrap = Bootstrap(app)
 
 
 @app.route('/')

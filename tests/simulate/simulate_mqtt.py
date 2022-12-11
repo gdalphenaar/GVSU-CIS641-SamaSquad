@@ -12,11 +12,6 @@ parser.add_argument(
     help='topic to publish on'
 )
 parser.add_argument(
-    'friendly',
-    type=str,
-    help='friendly name for sensor'
-)
-parser.add_argument(
     '--period',
     type=int,
     default=30,
@@ -67,7 +62,6 @@ while True:
     # compose message
     message = json.dumps({
         "sensor":args.topic,
-        "name":args.friendly,
         "temp":temp,
         "humd":humd
     })
