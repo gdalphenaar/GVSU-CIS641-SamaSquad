@@ -127,22 +127,25 @@ This section describes the functional and non-functional requirements of this gu
 
 # Change Management Plan
 
-As this system involves a certain amount of technical ability to set up, the primary user for this system would be a commercial operation consisting of many guitars (or other instruments) in one place. Examples of this would be guitar or music stores, concert halls, music venues, or museums. These user should be easily convinced of the benefits of this system, but for an unconvinced potential user, the following are major benefits over existing systems:
-1. Low cost of commodity devices, requiring no specialized hardware
+As this system involves a certain amount of technical ability to set up, the primary user for this system would be a commercial operation consisting of many guitars (or other instruments) in one place. This type of user would most likely hire technicians to install and customize the system as needed, though highly technical users can self-install and customize. Examples of settings where this system would be useful are guitar or music stores, concert halls, music venues, or museums.
+
+These user should be easily convinced of the benefits of this system, but for an unconvinced potential user, the following are major benefits over existing systems:
+1. Low cost of off-the-shelf commodity devices, requiring no specialized hardware
 2. Ease of monitoring compared to traditional wall-mounted sensors
 3. Ability to monitor from a computer as well as mobile devices
-4. Open system allows for end-user tweaking and configuration
-5. Easily scalable to operations of any size - dozens of sensors are easily possible
-6. Likely reduced maintenance and repair costs for guitars throughout a store - less money spent on base maintenance is more profit
+4. Ability for multiple users to monitor at once
+5. Open system allows for end-user tweaking and configuration
+6. Easily scalable to operations of any size - dozens of sensors are easily possible
+7. Likely reduced maintenance and repair costs for guitars throughout a store - less money spent on base maintenance is more profit
 
 
 To integrate this system in a commercial user's environment:
 1. Install the Raspberry Pi on-site and configure network access.
-2. Determine the best location for remote sensors. As this is likely to be in an environment with many people and many sensors, a "fire and forget" approach would be best here. This would involve determining the best location for sensors and setting them up with a direct connection to wall power. This type of user should not consider battery power, due to the hassle of dealing with constant recharging in potentially inconvenient locations.
+2. Determine the best location for remote sensors. This would involve determining the best location for sensors and setting them up with a direct connection to wall power.
 3. As this will most likely be set up in a commercial environment, additional security should be enabled. As-is, this system allows for anonymous published messages and uses no encryption between sensors and the broker.
 1. This type of setup would lend itself well to a kiosk-style setting, in which the dashboard is the only thing viewable. This could be located in a manager's or technician's office. A setup like this could involve a Raspberry Pi connected directly to a monitor in a fixed location.
 
-A further advantage of this system lies in its simplicity: once configured, the sensors run on their own and the dashboard requires little outside interference. This is advantageous in a commercial setting, as it requires only a few individuals to know how to operate the system. Training on this front would involve showing users how to add and remove sensors and change cutpoints. Ideally, this could be done alongside installation, giving the installing technician the ability to work with employees to determine these settings while also determining sensor placement. General training would involve little more than teaching users how to access the dashboard.
+A further advantage of this system lies in its simplicity: once configured, the sensors run on their own and the dashboard requires little outside interference. This "fire-and-forget" nature is advantageous in a commercial setting, as it requires only a few individuals to know how to operate the system. Training on this front would involve showing users how to add and remove sensors and change cutpoints. Ideally, this could be done alongside installation, giving the installing technician the ability to work with employees to determine these settings while also determining sensor placement. After this initial setup and configuration, general training would involve little more than teaching users how to access the dashboard. A user wanting a truly static installation could disable access to the settings and management pages after installation.
 
 Any issues and/or bugs discovered post-installation and configuration would likely be handled on a case-by-case basis. As the system is open and configurable, it can be easily tweaked to fit the user's needs. The exact extent to which custom configurations could be handled would depend on the user's service level agreement for continued support. However, while official support could be offered, the open nature of this system means that anyone on-site with the requisite technical knowledge could make fixes or improvements.
 
