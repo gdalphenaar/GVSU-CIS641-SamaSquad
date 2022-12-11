@@ -1,3 +1,6 @@
+# update
+sudo apt update -y && sudo apt upgrade -y
+
 # install mosquitto
 sudo apt install -y mosquitto mosquitto-clients
 echo "\n" | sudo tee --append /etc/mosquitto/mosquitto.conf

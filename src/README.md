@@ -1,3 +1,3 @@
-### `flask-site`
+# Source files
 
-Contains files for running the Flask web server
+Clone this repository and run `/scripts/setup.sh`
