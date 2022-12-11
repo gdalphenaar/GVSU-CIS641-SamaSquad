@@ -22,10 +22,16 @@ The goal for this project is to build a Raspberry Pi-controlled temperature and 
 
 * Raspberry Pi (preferably, but this project can also run on most "always on" Debian-based systems)
     * Add more details about compatibility
+    * Note: these instructions assume some familiarity with Raspberry Pi computers
 
 ## Run Instructions
 
-* ## Sensor Setup
-    * Connect BME280 sensor to ESP8266
-    * Create an Arduino Sketch using `sensor.ino`
-    * Using Arduino IDE, upload `sensor.ino` to the ESP8266 board
+0. Sensor Setup
+    * Connect the BME280 sensor to the ESP8266 microcontroller
+    * This might require a bit of soldering
+
+1. Set Up Raspberry Pi
+    1. Note: these instructions were tested using a clean (i.e., fresh install) Raspberry Pi OS 32 bit version x running in headless mode.
+    1. Before starting anything else, make a note of your Raspberry Pi's IP address - this address
+
+1. Set up
