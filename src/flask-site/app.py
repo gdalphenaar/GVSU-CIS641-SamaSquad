@@ -9,9 +9,9 @@ from datetime import datetime
 
 
 app = Flask(__name__)
-app.config['SECRET'] = 'my secret key'
+app.config['SECRET'] = 'sama'
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-app.config['MQTT_BROKER_URL'] = '192.168.1.77'
+app.config['MQTT_BROKER_URL'] = '0.0.0.0'
 app.config['MQTT_BROKER_PORT'] = 1883
 app.config['MQTT_CLEAN_SESSION'] = True
 app.config['MQTT_KEEPALIVE'] = 30

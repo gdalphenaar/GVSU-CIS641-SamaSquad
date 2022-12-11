@@ -11,20 +11,13 @@ The goal for this project is to build a Raspberry Pi-controlled temperature and 
 * BME280 sensor, ESP8266 WiFi board, and ability to connect both components (soldering iron, etc.) - this project has been designed with a D1 mini ESP8266 board connected to a GY-BMEP BME280 sensor, but should work with either:
     * Another compatible ESP8266 and/or BME280
     * Any other device that can publish MQTT messages in the appropriate JSON format
-    * If you just want to test this project without putting a physical sensor unit together, the simulation code will simulate the proper MQTT messages
 
-<br>
+* Arduino IDE
 
-* Arduino IDE and the necessary libraries
-    * List libraries with links
+* Raspberry Pi (preferably, but this project can also run on most "always on" Linux-based systems with few - if any - tweaks required)
+    * Note: these instructions assume some familiarity with Raspberry Pi computers as well as the Arduino IDE
 
-<br>
-
-* Raspberry Pi (preferably, but this project can also run on most "always on" Debian-based systems)
-    * Add more details about compatibility
-    * Note: these instructions assume some familiarity with Raspberry Pi computers
-
-## Run Instructions
+## Instructions
 
 0. Set Up Sensor
     1. Before starting anything else, the sensors should be connected. Start by connect the BME280 sensor to the ESP8266 microcontroller - this might require a bit of soldering.

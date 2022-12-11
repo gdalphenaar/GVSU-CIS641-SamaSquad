@@ -6,6 +6,7 @@ echo "listener 1883" | sudo tee --append /etc/mosquitto/mosquitto.conf
 sudo systemctl enable mosquitto.service
 sudo systemctl start mosquitto
 
+# start flask site
 cd ../flask-site
 python3 -m venv flask-site
 source flask-site/bin/activate

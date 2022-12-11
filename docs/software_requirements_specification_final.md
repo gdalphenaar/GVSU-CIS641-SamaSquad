@@ -1,16 +1,16 @@
 # Overview
 
-This document outlines the system requirements specification, consisting of functional and non-functional requirements, for Project Sama - our guitar temperature and humidity monitoring system.
+This document outlines the system requirements specification, consisting of functional requirements, non-functional requirements, artifacts, and traceability links for this guitar temperature and humidity monitoring system.
 
 This system consists of three major components:
 - the *remote sensor(s)* that measure local temperature and humidity;
-- the *base unit* that controls the remote sensor(s), analyzes and stores sensor data, and serves the web interface; and
-- the *web interface* that allows users to monitor environmental conditions
+- the *base unit* that handles connections with sensors, and serves the web interface; and
+- the *web interface* that allows users to monitor environmental conditions and adjust settings
 
 Functional and non-functional requirements will be listed for each major component.
 
 # Software Requirements
-<Describe the structure of this section>
+This section describes the functional and non-functional requirements of this guitar monitoring system. Functional requirements represent concrete, testable requirements that the system must meet in order to be considered complete and functioning according to design. In this case, most of the functional requirements center around the technical functionality of the sensor-broker-dashboard data flow loop that comprises the bulk of the system. Nonfunctional requirements, on the other hand, deal mostly with usability and the user experience. Most of the nonfunctional requirements for this system focus on user quality of life improvements, and are mainly centered on making the dashboard interface easy-to-use.
 
 ## Functional Requirements
 ### 1. Remote Sensors
@@ -126,6 +126,25 @@ Functional and non-functional requirements will be listed for each major compone
 | NFR5.8 | the web dashboard should have a page for user management of sensors |
 
 # Change Management Plan
+
+As this system involves a certain amount of technical ability to set up, the primary user for this system would be a commercial operation consisting of many guitars (or other instruments) in one place. Examples of this would be guitar or music stores, concert halls, music venues, or museums. These user should be easily convinced of the benefits of this system, but for an unconvinced potential user, the following are major benefits over existing systems:
+1. Low cost of commodity devices, requiring no specialized hardware
+2. Ease of monitoring compared to traditional wall-mounted sensors
+3. Ability to monitor from a computer as well as mobile devices
+4. Open system allows for end-user tweaking and configuration
+5. Easily scalable to operations of any size - dozens of sensors are easily possible
+6. Likely reduced maintenance and repair costs for guitars throughout a store - less money spent on base maintenance is more profit
+
+
+To integrate this system in a commercial user's environment:
+1. Install the Raspberry Pi on-site and configure network access.
+2. Determine the best location for remote sensors. As this is likely to be in an environment with many people and many sensors, a "fire and forget" approach would be best here. This would involve determining the best location for sensors and setting them up with a direct connection to wall power. This type of user should not consider battery power, due to the hassle of dealing with constant recharging in potentially inconvenient locations.
+3. As this will most likely be set up in a commercial environment, additional security should be enabled. As-is, this system allows for anonymous published messages and uses no encryption between sensors and the broker.
+1. This type of setup would lend itself well to a kiosk-style setting, in which the dashboard is the only thing viewable. This could be located in a manager's or technician's office. A setup like this could involve a Raspberry Pi connected directly to a monitor in a fixed location.
+
+A further advantage of this system lies in its simplicity: once configured, the sensors run on their own and the dashboard requires little outside interference. This is advantageous in a commercial setting, as it requires only a few individuals to know how to operate the system. Training on this front would involve showing users how to add and remove sensors and change cutpoints. Ideally, this could be done alongside installation, giving the installing technician the ability to work with employees to determine these settings while also determining sensor placement. General training would involve little more than teaching users how to access the dashboard.
+
+Any issues and/or bugs discovered post-installation and configuration would likely be handled on a case-by-case basis. As the system is open and configurable, it can be easily tweaked to fit the user's needs. The exact extent to which custom configurations could be handled would depend on the user's service level agreement for continued support. However, while official support could be offered, the open nature of this system means that anyone on-site with the requisite technical knowledge could make fixes or improvements.
 
 # Traceability links
 
